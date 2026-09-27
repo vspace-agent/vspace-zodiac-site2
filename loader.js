@@ -4,7 +4,7 @@
   const pastePanel=document.querySelector('#pastePanel'), pasteText=document.querySelector('#pasteText');
   const usePaste=document.querySelector('#usePaste'), error=document.querySelector('#loadError');
   const copyPrompt=document.querySelector('#copyPrompt'), copyStatus=document.querySelector('#copyStatus');
-  const promptToggle=document.querySelector('#promptToggle'), promptPanel=document.querySelector('#promptPanel'), promptPreview=document.querySelector('#promptPreview');
+  const promptToggle=document.querySelector('#promptToggle'), promptPanel=document.querySelector('#promptPanel'), promptPreview=document.querySelector('#promptPreview'), closePrompt=document.querySelector('#closePrompt');
   let formattingPrompt=window.VSPACE_FORMATTING_PROMPT_FALLBACK||'';
   promptPreview.textContent=formattingPrompt.slice(0,1100)+(formattingPrompt.length>1100?'\\n\\n…':'');
   if(location.protocol!=='file:')fetch('vspace_scrollytelling_content_formatting.md').then(r=>r.ok?r.text():Promise.reject()).then(t=>{formattingPrompt=t;promptPreview.textContent=t.slice(0,1100)+(t.length>1100?'\\n\\n…':'')}).catch(()=>{});
@@ -16,6 +16,10 @@
     const opening=promptPanel.hidden;
     promptPanel.hidden=!opening;
     drop.classList.toggle('prompt-open',opening);
+  };
+  closePrompt.onclick=()=>{
+    promptPanel.hidden=true;
+    drop.classList.remove('prompt-open');
   };
   copyPrompt.onclick=async()=>{
     let ok=false;

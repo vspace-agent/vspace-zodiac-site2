@@ -80,3 +80,15 @@
   box-shadow:none !important;
   clip-path:none !important;
 }
+
+.prompt-back{
+  align-self:flex-start;
+  margin:0 0 1.2em;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:rgba(246,223,170,.72)!important;
+  font-size:10px!important;
+  letter-spacing:.14em!important;
+}
+.prompt-back:hover{color:#f6dfaa!important}
