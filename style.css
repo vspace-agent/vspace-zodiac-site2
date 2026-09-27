@@ -92,3 +92,14 @@
   letter-spacing:.14em!important;
 }
 .prompt-back:hover{color:#f6dfaa!important}
+
+.prompt-actions .prompt-back{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  font-size:10px!important;
+  letter-spacing:.12em!important;
+  text-decoration:underline;
+  text-underline-offset:.35em;
+}

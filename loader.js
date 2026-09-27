@@ -17,9 +17,11 @@
     promptPanel.hidden=!opening;
     drop.classList.toggle('prompt-open',opening);
   };
-  closePrompt.onclick=()=>{
-    promptPanel.hidden=true;
+  closePrompt.onclick=e=>{
+    e.preventDefault();
+    e.stopPropagation();
     drop.classList.remove('prompt-open');
+    promptPanel.hidden=true;
   };
   copyPrompt.onclick=async()=>{
     let ok=false;
