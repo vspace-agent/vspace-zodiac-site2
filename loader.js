@@ -3,10 +3,30 @@
   const drop=document.querySelector('#dropZone'), pasteToggle=document.querySelector('#pasteInstead');
   const pastePanel=document.querySelector('#pastePanel'), pasteText=document.querySelector('#pasteText');
   const usePaste=document.querySelector('#usePaste'), error=document.querySelector('#loadError');
+  const copyPrompt=document.querySelector('#copyPrompt'), copyStatus=document.querySelector('#copyStatus');
+  const promptToggle=document.querySelector('#promptToggle'), promptPanel=document.querySelector('#promptPanel'), promptPreview=document.querySelector('#promptPreview');
+  let formattingPrompt=window.VSPACE_FORMATTING_PROMPT_FALLBACK||'';
+  promptPreview.textContent=formattingPrompt.slice(0,1100)+(formattingPrompt.length>1100?'\\n\\n…':'');
+  if(location.protocol!=='file:')fetch('vspace_scrollytelling_content_formatting.md').then(r=>r.ok?r.text():Promise.reject()).then(t=>{formattingPrompt=t;promptPreview.textContent=t.slice(0,1100)+(t.length>1100?'\\n\\n…':'')}).catch(()=>{});
 
   choose.onclick=()=>fileInput.click();
   fileInput.onchange=()=>{const f=fileInput.files?.[0];if(f)readFile(f)};
   pasteToggle.onclick=()=>{pastePanel.hidden=!pastePanel.hidden;if(!pastePanel.hidden)pasteText.focus()};
+  promptToggle.onclick=()=>{
+    const opening=promptPanel.hidden;
+    promptPanel.hidden=!opening;
+    drop.classList.toggle('prompt-open',opening);
+  };
+  copyPrompt.onclick=async()=>{
+    let ok=false;
+    try{await navigator.clipboard.writeText(formattingPrompt);ok=true}catch(e){}
+    if(!ok){
+      const ta=document.createElement('textarea');ta.value=formattingPrompt;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();ok=document.execCommand('copy');ta.remove();
+    }
+    copyStatus.textContent=ok?'Copied':'Copy failed';
+    if(ok)setTimeout(()=>copyStatus.textContent='',1800);
+  };
   usePaste.onclick=()=>loadMarkdown(pasteText.value);
   ['dragenter','dragover'].forEach(type=>drop.addEventListener(type,e=>{e.preventDefault();drop.classList.add('dragging')}));
   ['dragleave','drop'].forEach(type=>drop.addEventListener(type,e=>{e.preventDefault();drop.classList.remove('dragging')}));
@@ -51,7 +71,7 @@
     if(book.chapters.length<1||book.chapters.length>12)throw new Error(`Expected 1–12 ## chapters; found ${book.chapters.length}.`);
     book.chapters.forEach((ch,i)=>{
       if(!/\s[—-]\s/.test(ch.title))throw new Error(`Chapter ${i+1} needs a motive question: ## Title --- Question`);
-      if(ch.subunits.length<2||ch.subunits.length>16)throw new Error(`“${ch.title}” needs 2–16 ### sub-units; found ${ch.subunits.length}.`);
+      if(ch.subunits.length<1||ch.subunits.length>16)throw new Error(`“${ch.title}” needs 1–16 ### sub-units; found ${ch.subunits.length}.`);
       ch.subunits.forEach(s=>{if(!s.brief)throw new Error(`“${s.title}” is missing #### BRIEF.`);if(!s.detailed)throw new Error(`“${s.title}” is missing #### DETAILED.`)})
     })
   }

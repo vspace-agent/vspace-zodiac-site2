@@ -29,3 +29,54 @@
 .loader-view{position:fixed;inset:0;display:grid;place-items:center;background:#030b17;color:#f6dfaa;z-index:500}
 .loader-card{position:relative;width:min(88vw,72vh);aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8%;border:1px solid rgba(246,223,170,.16);background:radial-gradient(circle at 50% 48%,rgba(43,74,104,.22),rgba(3,11,23,.96) 64%);box-shadow:0 18px 60px rgba(0,0,0,.38);transition:border-color .35s,box-shadow .35s}
 .loader-card.dragging{border-color:rgba(255,226,154,.65);box-shadow:0 0 42px rgba(255,218,130,.18)}.loader-mark{font-size:3.1vmin;text-shadow:0 0 22px #ffe39a;animation:controllerBreath 2.8s ease-in-out infinite}.loader-card h1{font-weight:400;font-size:clamp(26px,4.2vmin,54px);margin:1.2vmin 0 .5vmin}.loader-sub{font-style:italic;opacity:.55;margin:0 0 3vmin}.loader-card button{border:1px solid rgba(246,223,170,.35);border-radius:999px;background:rgba(8,20,36,.5);padding:.9em 1.6em;cursor:pointer;letter-spacing:.12em;font:600 clamp(10px,.85vmin,13px) system-ui,sans-serif}.paste-link{border:0!important;background:transparent!important;text-decoration:underline;text-underline-offset:.35em;opacity:.6;margin-top:1.2vmin}.privacy{font:clamp(10px,.78vmin,12px) system-ui,sans-serif;opacity:.38;margin-top:2.5vmin}.paste-panel{position:absolute;inset:8%;background:rgba(3,11,23,.97);z-index:4;padding:5%;border:1px solid rgba(246,223,170,.18)}.paste-panel textarea{width:100%;height:82%;resize:none;background:#071323;color:#f6dfaa;border:1px solid rgba(246,223,170,.18);padding:1em;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;outline:none}.paste-panel button{margin-top:2%}.load-error{min-height:1.5em;margin-top:1.5vmin;max-width:80%;font:clamp(10px,.82vmin,13px)/1.4 system-ui,sans-serif;color:#ffd1b4}
+
+.prompt-help{display:flex;align-items:center;gap:.7em;margin-top:1.5vmin;font:clamp(10px,.78vmin,12px) system-ui,sans-serif;opacity:.65}
+.prompt-copy{border:0!important;background:transparent!important;padding:0!important;text-decoration:underline;text-underline-offset:.3em;letter-spacing:.08em!important}
+.copy-status{min-width:3.5em;opacity:.7}
+
+.prompt-help{width:min(92%,620px);margin-top:1.5vmin;text-align:center}
+.prompt-toggle{border:0!important;background:transparent!important;padding:.35em!important;text-decoration:underline;text-underline-offset:.35em;opacity:.72;letter-spacing:.04em!important}
+.prompt-preview-panel{position:absolute;inset:8%;z-index:3;display:flex;flex-direction:column;padding:5%;background:rgba(3,11,23,.98);border:1px solid rgba(246,223,170,.18);text-align:left}
+.prompt-preview-panel[hidden]{display:none}
+.prompt-instruction{margin:0 0 1em;font:clamp(11px,.9vmin,14px)/1.55 system-ui,sans-serif;color:rgba(246,223,170,.78)}
+.prompt-instruction strong,.prompt-instruction code{color:#f6dfaa}
+.prompt-preview{flex:1;min-height:0;overflow:auto;white-space:pre-wrap;margin:0;padding:1em;background:#071323;border:1px solid rgba(246,223,170,.14);color:rgba(246,223,170,.68);font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+.prompt-actions{display:flex;align-items:center;justify-content:center;gap:1em;margin-top:1em}
+.prompt-copy{font-size:10px!important}.copy-status{font:11px system-ui,sans-serif;opacity:.7}
+
+/* Prompt preview is a focused reading layer: hide the loader visually beneath it. */
+.prompt-preview-panel{
+  background:#020b16 !important;
+  box-shadow:0 0 0 100vmax #020b16;
+  clip-path:inset(-100vmax);
+  border:1px solid rgba(246,223,170,.20);
+}
+
+.prompt-preview{
+  background:#061321 !important;
+  border:1px solid rgba(246,223,170,.16);
+}
+
+
+/* Prompt mode owns the loader square; ordinary loader controls leave attention. */
+.loader-card.prompt-open > :not(.prompt-help){
+  visibility:hidden !important;
+}
+.loader-card.prompt-open .prompt-help{
+  position:absolute;
+  inset:0;
+  width:auto;
+  margin:0;
+  z-index:20;
+}
+.loader-card.prompt-open .prompt-toggle{
+  display:none;
+}
+.loader-card.prompt-open .prompt-preview-panel{
+  position:absolute;
+  inset:0;
+  box-sizing:border-box;
+  background:#020b16 !important;
+  box-shadow:none !important;
+  clip-path:none !important;
+}
