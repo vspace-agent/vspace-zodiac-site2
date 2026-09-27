@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>V🌔Space — Markdown Instrument</title><link rel="stylesheet" href="style.css"></head>
+<body class="loading-mode">
+<section id="loader" class="loader-view" aria-labelledby="loaderTitle">
+  <div id="dropZone" class="loader-card">
+    <div class="loader-mark">✦</div>
+    <h1 id="loaderTitle">Choose .md file</h1>
+    <p class="loader-sub">or drag it into this square</p>
+    <input id="fileInput" type="file" accept=".md,text/markdown,text/plain" hidden>
+    <button id="chooseFile" type="button">CHOOSE .MD FILE</button>
+    <button id="pasteInstead" class="paste-link" type="button">Paste instead</button>
+    <p class="privacy">Your content stays in this browser.</p>
+    <div id="pastePanel" class="paste-panel" hidden><textarea id="pasteText" spellcheck="false" placeholder="# BOOK TITLE&#10;&#10;## Chapter --- Motive question&#10;&#10;### Sub-unit&#10;&#10;#### BRIEF&#10;...&#10;&#10;#### DETAILED&#10;..."></textarea><button id="usePaste" type="button">USE THIS MARKDOWN</button></div>
+    <div id="loadError" class="load-error" role="alert"></div>
+  </div>
+</section>
+<main id="app" aria-live="polite">
+<section id="canvasView" class="view active"><div class="square-stage"><img class="bg" src="assets/canvas.png" alt=""><div id="motionField"><div id="bookIntro" class="book-intro"></div><div id="chapterChoices"></div></div><button id="controller" aria-label="Begin chapter constellation"><span>✦</span></button><div id="sleepers"></div><div id="hint" class="hint">Touch the moon to begin</div></div></section>
+<section id="frameView" class="view"><div id="frameStage" class="square-stage frame-stage"><div id="frameFront" class="frame-face front-face"><img class="bg" src="assets/frame.png" alt=""><button id="back" class="edge-control" aria-label="Back to chapters">←</button><svg id="growthLines" viewBox="0 0 1254 1254" preserveAspectRatio="none" aria-hidden="true"></svg><div id="orbit"></div><button id="center" class="center-text"></button><div id="frameHint" class="hint"></div></div><article id="frameBack" class="frame-face back-face"><button id="closeDetail" class="edge-control" aria-label="Return to constellation">←</button><button id="printBook" class="print-control" type="button">PRINT BOOK</button><div class="reading-page"><div id="detailChapter" class="reading-chapter"></div><h1 id="detailTitle"></h1><div id="detailText"></div></div></article></div></section>
+</main><script src="loader.js"></script></body></html>
